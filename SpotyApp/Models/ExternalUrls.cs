@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace SpotyApp.Models
 {
-    public class NewAlbumReleases
+    public class ExternalUrls
     {
-        [JsonProperty("albums")]
-        public Albums Albums { get; set; }
+        [JsonProperty("spotify")]
+        public string Spotify { get; set; }
     }
 }

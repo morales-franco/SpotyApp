@@ -25,18 +25,29 @@ namespace SpotyApp.Services
 
         }
 
-        public async Task<NewAlbumReleases> GetNewAlbumReleases(Token token)
+        public async Task<NewAlbumReleases> GetNewAlbumReleases(Token token, string country = "", int limit = 20, int offset = 0)
         {
             using (var client = new HttpClient())
             {
                 client.DefaultRequestHeaders.Add("Authorization", $"Bearer { token.AccessToken }");
-                var response = client.GetAsync("https://api.spotify.com/v1/browse/new-releases").Result;
+                var response = await client.GetAsync(GetUrlApiNewAlbumReleases(country, limit,offset));
                 response.EnsureSuccessStatusCode();
 
                 string msg = await response.Content.ReadAsStringAsync();
                 var newReleases = JsonConvert.DeserializeObject<NewAlbumReleases>(msg);
                 return newReleases;
             }
+        }
+
+        public string GetUrlApiNewAlbumReleases(string country = "", int limit = 20, int offset = 0)
+        {
+            limit = Math.Min(limit, 50);
+            StringBuilder builder = new StringBuilder("https://api.spotify.com/v1/browse/new-releases");
+            builder.Append("?limit=" + limit);
+            builder.Append("&offset=" + offset);
+            if (!string.IsNullOrEmpty(country))
+                builder.Append("&country=" + country);
+            return builder.ToString();
         }
 
         public async Task<Token> GetToken()

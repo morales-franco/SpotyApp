@@ -10,7 +10,7 @@ namespace SpotyApp.Services.Interfaces
     {
         Task<Token> GetToken();
 
-        Task<NewAlbumReleases> GetNewAlbumReleases(Token token);
+        Task<NewAlbumReleases> GetNewAlbumReleases(Token token, string country = "", int limit = 20, int offset = 0);
 
 
     }
