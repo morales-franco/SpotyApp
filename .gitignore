@@ -5,3 +5,4 @@
 /.vs/SpotyApp/v15/Server/sqlite3
 /SpotyApp/bin/Debug/netcoreapp2.1
 /SpotyApp/obj
+/.vs
