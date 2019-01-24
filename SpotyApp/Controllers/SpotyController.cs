@@ -15,9 +15,10 @@ namespace SpotyApp.Controllers
         {
             _spotyService = service;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var token = _spotyService.GetToken();
+            var token = await _spotyService.GetToken();
+            var newAlbumReleases = await _spotyService.GetNewAlbumReleases(token);
 
             return View();
         }
