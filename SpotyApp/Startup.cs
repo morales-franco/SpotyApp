@@ -33,6 +33,7 @@ namespace SpotyApp
             });
 
             services.AddScoped<ISpotyService, SpotyService>();
+            services.AddScoped<IRadioService, RadioService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
