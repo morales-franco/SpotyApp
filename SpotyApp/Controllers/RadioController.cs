@@ -26,13 +26,13 @@ namespace SpotyApp.Controllers
             var model = new RadioVM();
             var timer = Stopwatch.StartNew();
 
-            model.Albums = _service.GetTopAlbums();
-            model.Artists = _service.GetTopArtists();
-            model.CurrentNumberOfListeners = _service.GetCurrentNumberOfListeners();
+            model.Albums = _service.GetTopAlbums(); //Delay 2000ms
+            model.Artists = _service.GetTopArtists(); //Delay 2000ms
+            model.CurrentNumberOfListeners = _service.GetCurrentNumberOfListeners(); //Delay 1000ms
 
             timer.Stop();
 
-            ViewBag.Delay = timer.ElapsedMilliseconds;
+            ViewBag.Delay = timer.ElapsedMilliseconds; //Sync total delay = 2000ms + 2000ms + 1000ms = 5000ms
 
             return View(model);
         }
