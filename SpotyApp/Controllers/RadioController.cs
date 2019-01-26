@@ -41,17 +41,45 @@ namespace SpotyApp.Controllers
         /*
          * Asynchronous Method but execute syncronous
          */
-        public IActionResult IndexAsyncA()
+        public async Task<IActionResult> IndexAsyncA()
         {
-            return View();
+            var model = new RadioVM();
+            var timer = Stopwatch.StartNew();
+
+            model.Albums = await _service.GetTopAlbumsAsync(); //Delay 2000ms
+            model.Artists = await _service.GetTopArtistsAsync(); //Delay 2000ms
+            model.CurrentNumberOfListeners = await _service.GetCurrentNumberOfListenersAsync(); //Delay 1000ms
+
+            timer.Stop();
+
+            ViewBag.Delay = timer.ElapsedMilliseconds; //Sync total delay = 2000ms + 2000ms + 1000ms = 5000ms
+
+            return View(model);
         }
 
         /*
          * Asynchronous Method
          */
-        public IActionResult IndexAsyncB()
+        public async Task<IActionResult> IndexAsyncB()
         {
-            return View();
+            var model = new RadioVM();
+            var timer = Stopwatch.StartNew();
+
+            //Task&async power!
+            var albumsPromise =  _service.GetTopAlbumsAsync(); //Delay 2000ms
+            var artistPromise = _service.GetTopArtistsAsync(); //Delay 2000ms
+            var numberOfListenersPromise = _service.GetCurrentNumberOfListenersAsync(); //Delay 1000ms
+
+            //Get results
+            model.Albums = await albumsPromise;
+            model.Artists = await artistPromise;
+            model.CurrentNumberOfListeners = await numberOfListenersPromise;
+
+            timer.Stop();
+
+            ViewBag.Delay = timer.ElapsedMilliseconds;
+
+            return View(model);
         }
     }
 }

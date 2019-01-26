@@ -10,5 +10,10 @@ namespace SpotyApp.Services.Interfaces
         IList<string> GetTopArtists();
         IList<string> GetTopAlbums();
         int GetCurrentNumberOfListeners();
+
+
+        Task<IList<string>> GetTopAlbumsAsync();
+        Task<IList<string>> GetTopArtistsAsync();
+        Task<int> GetCurrentNumberOfListenersAsync();
     }
 }
